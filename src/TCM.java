@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.LinkedList;
+import java.util.LinkedHashSet;
 public class TCM {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
@@ -63,6 +64,12 @@ public class TCM {
 
         System.out.println("\nFinal ordered train consist:");
         System.out.println(orderedConsist);
+        LinkedHashSet<String> trainFormation = new LinkedHashSet<>(orderedConsist);
+        trainFormation.add("Pantry Car");
+        trainFormation.add("Sleeper");
+
+        System.out.println("\nTrain formation using LinkedHashSet:");
+        System.out.println(trainFormation);
 
         System.out.println("System ready for further operations...");
     }
