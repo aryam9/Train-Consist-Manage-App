@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.LinkedList;
 import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.Map;
 public class TCM {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
@@ -71,6 +73,14 @@ public class TCM {
         System.out.println("\nTrain formation using LinkedHashSet:");
         System.out.println(trainFormation);
 
+        Map<String, Integer> bogieCapacity = new HashMap<>();
+        bogieCapacity.put("Sleeper", 72);
+        bogieCapacity.put("AC Chair", 78);
+        bogieCapacity.put("First Class", 24);
+        System.out.println("\nBogie Capacity Mapping:");
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+            System.out.println(entry.getKey() + " -> Capacity: " + entry.getValue());
+        }
         System.out.println("System ready for further operations...");
     }
 }
