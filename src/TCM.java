@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.LinkedList;
 public class TCM {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
@@ -30,14 +31,38 @@ public class TCM {
         bogieIds.add("BG101");
         bogieIds.add("BG102");
         bogieIds.add("BG103");
-        bogieIds.add("BG101"); // duplicate
-        bogieIds.add("BG102"); // duplicate
+        bogieIds.add("BG101");
+        bogieIds.add("BG102");
 
         System.out.println("\nBogie IDs added :");
         System.out.println("BG101, BG102, BG103, BG101, BG102");
 
         System.out.println("\nUnique Bogie IDs :");
         System.out.println(bogieIds);
+
+        LinkedList<String> orderedConsist = new LinkedList<>();
+
+        orderedConsist.add("Engine");
+        orderedConsist.add("Sleeper");
+        orderedConsist.add("AC");
+        orderedConsist.add("Cargo");
+        orderedConsist.add("Guard");
+
+        System.out.println("\nInitial Train Consist:");
+        System.out.println(orderedConsist);
+
+        orderedConsist.add(2, "Pantry Car");
+        System.out.println("\nAfter adding Pantry Car at position 2:");
+        System.out.println(orderedConsist);
+
+        orderedConsist.removeFirst();
+        orderedConsist.removeLast();
+
+        System.out.println("\nAfter removing first and last bogie:");
+        System.out.println(orderedConsist);
+
+        System.out.println("\nFinal ordered train consist:");
+        System.out.println(orderedConsist);
 
         System.out.println("System ready for further operations...");
     }
