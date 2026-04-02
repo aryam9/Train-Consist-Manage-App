@@ -1,7 +1,6 @@
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class TCM {
     public static void main(String[] args) {
@@ -88,37 +87,28 @@ public class TCM {
         }
 
         List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Sleeper", 72));
+        for (int i = 0; i < 10000; i++) {
+            bogies.add(new Bogie("Sleeper", 72));
+            bogies.add(new Bogie("AC Chair", 56));
+            bogies.add(new Bogie("First Class", 24));
+        }
 
-        System.out.println("\nBefore Sorting:");
-        bogies.forEach(System.out::println);
+        long startLoop = System.nanoTime();
+        List<Bogie> filteredLoop = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) filteredLoop.add(b);
+        }
+        long endLoop = System.nanoTime();
+        System.out.println("\nLoop-based filtering found " + filteredLoop.size() + " bogies.");
+        System.out.println("Loop filtering time: " + (endLoop - startLoop) + " ns");
 
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
-        System.out.println("\nAfter Sorting (Ascending Order):");
-        bogies.forEach(System.out::println);
-
-        bogies.sort(Comparator.comparingInt((Bogie b) -> b.capacity).reversed());
-        System.out.println("\nAfter Sorting (Descending Order):");
-        bogies.forEach(System.out::println);
-
-        List<Bogie> highCapacityBogies = bogies.stream()
+        long startStream = System.nanoTime();
+        List<Bogie> filteredStream = bogies.stream()
                 .filter(b -> b.capacity > 60)
                 .toList();
-        System.out.println("\nFiltered bogies with capacity > 60:");
-        highCapacityBogies.forEach(System.out::println);
-
-        Map<String, List<Bogie>> groupedBogies = bogies.stream()
-                .collect(Collectors.groupingBy(b -> b.name));
-        System.out.println("\nGrouped bogies by type:");
-        groupedBogies.forEach((k, v) -> System.out.println(k + ": " + v));
-
-        int totalSeats = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
-        System.out.println("\nTotal seating capacity of the train: " + totalSeats);
+        long endStream = System.nanoTime();
+        System.out.println("\nStream-based filtering found " + filteredStream.size() + " bogies.");
+        System.out.println("Stream filtering time: " + (endStream - startStream) + " ns");
 
         String trainID = "TRN-1234";
         String cargoCode = "PET-AB";
