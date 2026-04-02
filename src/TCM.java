@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class TCM {
@@ -128,6 +130,29 @@ public class TCM {
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
         System.out.println("\nTotal seating capacity of the train: " + totalSeats);
+
+        String trainID = "TRN-1234";
+        String cargoCode = "PET-AB";
+
+        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
+        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
+
+        Matcher trainMatcher = trainPattern.matcher(trainID);
+        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+
+        System.out.println("\nTrain ID Validation:");
+        if (trainMatcher.matches()) {
+            System.out.println(trainID + " is valid.");
+        } else {
+            System.out.println(trainID + " is invalid.");
+        }
+
+        System.out.println("\nCargo Code Validation:");
+        if (cargoMatcher.matches()) {
+            System.out.println(cargoCode + " is valid.");
+        } else {
+            System.out.println(cargoCode + " is invalid.");
+        }
 
         System.out.println("\nSystem ready for further operations...");
     }
