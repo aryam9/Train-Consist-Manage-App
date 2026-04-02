@@ -10,24 +10,24 @@ public class TCM {
         System.out.println("Train initialized successfully.");
         System.out.println("Initial number of bogies: " + trainConsist.size());
 
-        List<String> passengerBogies = new ArrayList<>();
-        passengerBogies.add("Sleeper");
-        passengerBogies.add("AC Chair");
-        passengerBogies.add("First Class");
+        List<String> passengerBogiesNames = new ArrayList<>();
+        passengerBogiesNames.add("Sleeper");
+        passengerBogiesNames.add("AC Chair");
+        passengerBogiesNames.add("First Class");
         System.out.println("Passenger bogies added:");
-        System.out.println(passengerBogies);
+        System.out.println(passengerBogiesNames);
 
-        passengerBogies.remove("AC Chair");
+        passengerBogiesNames.remove("AC Chair");
         System.out.println("\nAfter removing 'AC Chair':");
-        System.out.println(passengerBogies);
+        System.out.println(passengerBogiesNames);
 
-        if (passengerBogies.contains("Sleeper")) {
+        if (passengerBogiesNames.contains("Sleeper")) {
             System.out.println("\n'Sleeper' bogie exists in the train.");
         } else {
             System.out.println("\n'Sleeper' bogie does not exist.");
         }
         System.out.println("\nFinal passenger bogie list:");
-        System.out.println(passengerBogies);
+        System.out.println(passengerBogiesNames);
 
         Set<String> bogieIds = new HashSet<>();
         bogieIds.add("BG101");
@@ -66,12 +66,12 @@ public class TCM {
         System.out.println("\nTrain formation using LinkedHashSet:");
         System.out.println(trainFormation);
 
-        Map<String, Integer> bogieCapacity = new HashMap<>();
-        bogieCapacity.put("Sleeper", 72);
-        bogieCapacity.put("AC Chair", 78);
-        bogieCapacity.put("First Class", 24);
+        Map<String, Integer> bogieCapacityMap = new HashMap<>();
+        bogieCapacityMap.put("Sleeper", 72);
+        bogieCapacityMap.put("AC Chair", 78);
+        bogieCapacityMap.put("First Class", 24);
         System.out.println("\nBogie Capacity Mapping:");
-        bogieCapacity.forEach((k, v) -> System.out.println(k + " -> Capacity: " + v));
+        bogieCapacityMap.forEach((k, v) -> System.out.println(k + " -> Capacity: " + v));
 
         class Bogie {
             String name;
@@ -164,5 +164,46 @@ public class TCM {
         } else {
             System.out.println("Unsafe cargo detected in cylindrical bogie(s)! Train is NOT safety compliant.");
         }
+        class InvalidCapacityException extends Exception {
+            InvalidCapacityException(String message) {
+                super(message);
+            }
+        }
+
+        class PassengerBogie {
+            String type;
+            int capacity;
+            PassengerBogie(String type, int capacity) throws InvalidCapacityException {
+                if (capacity <= 0) {
+                    throw new InvalidCapacityException("Capacity must be greater than zero");
+                }
+                this.type = type;
+                this.capacity = capacity;
+            }
+            @Override
+            public String toString() {
+                return type + " -> Capacity: " + capacity;
+            }
+        }
+
+        List<PassengerBogie> validPassengerBogies = new ArrayList<>();
+        try {
+            validPassengerBogies.add(new PassengerBogie("Sleeper", 72));
+            validPassengerBogies.add(new PassengerBogie("AC Chair", 56));
+            validPassengerBogies.add(new PassengerBogie("First Class", 24));
+        } catch (InvalidCapacityException e) {
+            System.out.println("\nError creating bogie: " + e.getMessage());
+        }
+
+        System.out.println("\nPassenger bogies after capacity validation:");
+        validPassengerBogies.forEach(System.out::println);
+
+        System.out.println("\nTrain Consist including valid passenger bogies:");
+        LinkedList<String> finalConsist = new LinkedList<>();
+        finalConsist.add("Engine");
+        validPassengerBogies.forEach(b -> finalConsist.add(b.type));
+        finalConsist.add("Cargo");
+        finalConsist.add("Guard");
+        System.out.println(finalConsist);
     }
 }
