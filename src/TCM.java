@@ -124,6 +124,15 @@ public class TCM {
             System.out.println(b);
         }
 
+        List<Bogie> highCapacityBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .toList(); 
+
+        System.out.println("Filtered bogies with capacity > 60:");
+        for (Bogie b : highCapacityBogies) {
+            System.out.println(b);
+        }
+
         System.out.println("\nSystem ready for further operations...");
     }
 }
