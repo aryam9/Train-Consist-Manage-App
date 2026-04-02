@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TCM {
     public static void main(String[] args) {
@@ -106,31 +107,31 @@ public class TCM {
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("Sleeper", 72));
 
         System.out.println("\nBefore Sorting:");
-        for (Bogie b : bogies) {
-            System.out.println(b);
-        }
+        bogies.forEach(System.out::println);
 
         bogies.sort(Comparator.comparingInt(b -> b.capacity));
         System.out.println("\nAfter Sorting (Ascending Order):");
-        for (Bogie b : bogies) {
-            System.out.println(b);
-        }
+        bogies.forEach(System.out::println);
 
         bogies.sort(Comparator.comparingInt((Bogie b) -> b.capacity).reversed());
         System.out.println("\nAfter Sorting (Descending Order):");
-        for (Bogie b : bogies) {
-            System.out.println(b);
-        }
+        bogies.forEach(System.out::println);
 
         List<Bogie> highCapacityBogies = bogies.stream()
                 .filter(b -> b.capacity > 60)
                 .toList(); 
+        System.out.println("\nFiltered bogies with capacity > 60:");
+        highCapacityBogies.forEach(System.out::println);
 
-        System.out.println("Filtered bogies with capacity > 60:");
-        for (Bogie b : highCapacityBogies) {
-            System.out.println(b);
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
+
+        System.out.println("\nGrouped bogies by type:");
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
 
         System.out.println("\nSystem ready for further operations...");
