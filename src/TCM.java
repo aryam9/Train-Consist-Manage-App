@@ -1,12 +1,4 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -55,7 +47,6 @@ public class TCM {
         orderedConsist.add("AC");
         orderedConsist.add("Cargo");
         orderedConsist.add("Guard");
-
         System.out.println("\nInitial Train Consist:");
         System.out.println(orderedConsist);
 
@@ -86,12 +77,10 @@ public class TCM {
         class Bogie {
             String name;
             int capacity;
-
             Bogie(String name, int capacity) {
                 this.name = name;
                 this.capacity = capacity;
             }
-
             @Override
             public String toString() {
                 return name + " -> Capacity: " + capacity;
@@ -154,6 +143,36 @@ public class TCM {
             System.out.println(cargoCode + " is invalid.");
         }
 
-        System.out.println("\nSystem ready for further operations...");
+        class GoodsBogie {
+            String type;
+            String cargo;
+            GoodsBogie(String type, String cargo) {
+                this.type = type;
+                this.cargo = cargo;
+            }
+            @Override
+            public String toString() {
+                return type + " -> Cargo: " + cargo;
+            }
+        }
+
+        List<GoodsBogie> goodsBogies = new ArrayList<>();
+        goodsBogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        goodsBogies.add(new GoodsBogie("Rectangular", "Coal"));
+        goodsBogies.add(new GoodsBogie("Open", "Grain"));
+        goodsBogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+
+        System.out.println("\nGoods bogies in the train:");
+        goodsBogies.forEach(System.out::println);
+
+        boolean safetyCompliant = goodsBogies.stream()
+                .allMatch(b -> !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum"));
+
+        System.out.println("\nSafety Compliance Check:");
+        if (safetyCompliant) {
+            System.out.println("All goods bogies are safe. Train is safety compliant.");
+        } else {
+            System.out.println("Unsafe cargo detected in cylindrical bogie(s)! Train is NOT safety compliant.");
+        }
     }
 }
