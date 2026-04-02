@@ -42,10 +42,8 @@ public class TCM {
         bogieIds.add("BG103");
         bogieIds.add("BG101");
         bogieIds.add("BG102");
-
         System.out.println("\nBogie IDs added :");
         System.out.println("BG101, BG102, BG103, BG101, BG102");
-
         System.out.println("\nUnique Bogie IDs :");
         System.out.println(bogieIds);
 
@@ -67,14 +65,12 @@ public class TCM {
         orderedConsist.removeLast();
         System.out.println("\nAfter removing first and last bogie:");
         System.out.println(orderedConsist);
-
         System.out.println("\nFinal ordered train consist:");
         System.out.println(orderedConsist);
 
         LinkedHashSet<String> trainFormation = new LinkedHashSet<>(orderedConsist);
         trainFormation.add("Pantry Car");
         trainFormation.add("Sleeper");
-
         System.out.println("\nTrain formation using LinkedHashSet:");
         System.out.println(trainFormation);
 
@@ -82,11 +78,8 @@ public class TCM {
         bogieCapacity.put("Sleeper", 72);
         bogieCapacity.put("AC Chair", 78);
         bogieCapacity.put("First Class", 24);
-
         System.out.println("\nBogie Capacity Mapping:");
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-            System.out.println(entry.getKey() + " -> Capacity: " + entry.getValue());
-        }
+        bogieCapacity.forEach((k, v) -> System.out.println(k + " -> Capacity: " + v));
 
         class Bogie {
             String name;
@@ -122,17 +115,19 @@ public class TCM {
 
         List<Bogie> highCapacityBogies = bogies.stream()
                 .filter(b -> b.capacity > 60)
-                .toList(); 
+                .toList();
         System.out.println("\nFiltered bogies with capacity > 60:");
         highCapacityBogies.forEach(System.out::println);
 
         Map<String, List<Bogie>> groupedBogies = bogies.stream()
                 .collect(Collectors.groupingBy(b -> b.name));
-
         System.out.println("\nGrouped bogies by type:");
-        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+        groupedBogies.forEach((k, v) -> System.out.println(k + ": " + v));
+
+        int totalSeats = bogies.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
+        System.out.println("\nTotal seating capacity of the train: " + totalSeats);
 
         System.out.println("\nSystem ready for further operations...");
     }
