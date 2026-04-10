@@ -205,5 +205,47 @@ public class TCM {
         finalConsist.add("Cargo");
         finalConsist.add("Guard");
         System.out.println(finalConsist);
+        class CargoSafetyException extends RuntimeException {
+            CargoSafetyException(String message) {
+                super(message);
+            }
+        }
+        class SafeGoodsBogie {
+            String type;
+            String cargo;
+
+            SafeGoodsBogie(String type) {
+                this.type = type;
+            }
+
+            void assignCargo(String cargo) {
+                try {
+                    if (type.equals("Rectangular") && cargo.equals("Petroleum")) {
+                        throw new CargoSafetyException("Unsafe assignment: Petroleum cannot be loaded in Rectangular bogie");
+                    }
+                    this.cargo = cargo;
+                    System.out.println(type + " bogie assigned cargo: " + cargo);
+                } catch (CargoSafetyException e) {
+                    System.out.println("Error: " + e.getMessage());
+                } finally {
+                    System.out.println("Cargo assignment attempt completed for " + type + " bogie.");
+                }
+            }
+
+            @Override
+            public String toString() {
+                return type + " -> Cargo: " + (cargo == null ? "None" : cargo);
+            }
+        }
+        SafeGoodsBogie bogie1 = new SafeGoodsBogie("Cylindrical");
+        SafeGoodsBogie bogie2 = new SafeGoodsBogie("Rectangular");
+        bogie1.assignCargo("Petroleum");
+        bogie2.assignCargo("Coal");
+        bogie2.assignCargo("Petroleum");
+        System.out.println("\nFinal Safe Goods Bogie States:");
+        System.out.println(bogie1);
+        System.out.println(bogie2);
+
+        System.out.println("\nProgram continues after handling cargo assignment exceptions.");
     }
 }
