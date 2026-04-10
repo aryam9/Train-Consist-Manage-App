@@ -291,5 +291,36 @@ public class TCM {
         } else {
             System.out.println("Bogie ID " + searchKey + " not found in the train.");
         }
+        String[] sortedBogieIds = {"BG309","BG101","BG550","BG205","BG412"};
+        Arrays.sort(sortedBogieIds);
+
+        String key = "BG101";
+
+        System.out.println("Sorted Bogie IDs:");
+        System.out.println(Arrays.toString(sortedBogieIds));
+        System.out.println("Searching for: " + key);
+
+        int low = 0;
+        int high = sortedBogieIds.length - 1;
+        boolean isFound = false;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int result = key.compareTo(sortedBogieIds[mid]);
+
+            if (result == 0) {
+                isFound = true;
+                break;
+            } else if (result < 0) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        if (isFound) {
+            System.out.println("Bogie ID " + key + " found using Binary Search.");
+        } else {
+            System.out.println("Bogie ID " + key + " not found using Binary Search.");
+        }
     }
 }
