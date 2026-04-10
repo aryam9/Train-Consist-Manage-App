@@ -273,5 +273,23 @@ public class TCM {
         Arrays.sort(bogieNames);
         System.out.println("After Sorting:");
         System.out.println(Arrays.toString(bogieNames));
+
+        String[] bogieIdsArray = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        String searchKey = "BG309";
+        System.out.println("Bogie IDs:");
+        System.out.println(Arrays.toString(bogieIdsArray));
+        System.out.println("Searching for: " + searchKey);
+        boolean found = false;
+        for (String id : bogieIdsArray) {
+            if (id.equals(searchKey)) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            System.out.println("Bogie ID " + searchKey + " found in the train.");
+        } else {
+            System.out.println("Bogie ID " + searchKey + " not found in the train.");
+        }
     }
 }
