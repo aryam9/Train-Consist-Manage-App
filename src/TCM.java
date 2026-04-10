@@ -266,5 +266,12 @@ public class TCM {
 
         System.out.println("Sorted Capacities (Ascending):");
         System.out.println(Arrays.toString(capacities));
+
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+        System.out.println("Before Sorting:");
+        System.out.println(Arrays.toString(bogieNames));
+        Arrays.sort(bogieNames);
+        System.out.println("After Sorting:");
+        System.out.println(Arrays.toString(bogieNames));
     }
 }
