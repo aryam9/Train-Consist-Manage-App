@@ -322,5 +322,23 @@ public class TCM {
         } else {
             System.out.println("Bogie ID " + key + " not found using Binary Search.");
         }
+        String[] searchArray = {};
+        String searchElement = "BG101";
+        System.out.println("Attempting search operation...");
+        if (searchArray.length == 0) {
+            throw new IllegalStateException("Cannot perform search: No bogies available in the train.");
+        }
+        boolean resultFound = false;
+        for (String id : searchArray) {
+            if (id.equals(searchElement)) {
+                resultFound = true;
+                break;
+            }
+        }
+        if (resultFound) {
+            System.out.println("Bogie ID " + searchElement + " found.");
+        } else {
+            System.out.println("Bogie ID " + searchElement + " not found.");
+        }
     }
 }
